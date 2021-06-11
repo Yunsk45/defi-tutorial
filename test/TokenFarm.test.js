@@ -8,7 +8,11 @@ require('chai')
   .should()
 
 
-contract('TokenFarm', accounts => {
+function tokens(n) {
+  return web3.utils.toWei(n, "ether");
+}
+
+contract('TokenFarm', ([owner, investor]) => {
 
   let daiToken; 
   let dappToken;
@@ -19,14 +23,36 @@ contract('TokenFarm', accounts => {
     dappToken = await DappToken.new();
     tokenFarm = await TokenFarm.new(dappToken.address, daiToken.address);
 
-    await dappToken.transfer(tokenFarm.address, web3.utils.toWei("1000000", "ether"));
+    await dappToken.transfer(tokenFarm.address, tokens("1000000"));
 
+    await daiToken.transfer(investor, tokens('100'), {from: owner});
   });
+
   describe("Mock Dai deployment", async () => {
     it("has a name", async () => {
       const name = await daiToken.name();
       assert.equal(name, 'Mock DAI Token');
     });
+  });
+
+  describe("Dapp deployment", async () => {
+    it("has a name", async () => {
+      const name = await dappToken.name();
+      assert.equal(name, 'DApp Token');
+    });
+  });
+
+  describe("Token Farm deployment", async () => {
+    it("has a name", async () => {
+      const name = await tokenFarm.name();
+      assert.equal(name, 'DApp Token Farm');
+    });
+
+    it("contract has tokens", async () => {
+      let balance = await dappToken.balanceOf(tokenFarm.address);
+      assert.equal(balance.toString(), tokens("1000000"));
+    });
+
   });
 
 });
