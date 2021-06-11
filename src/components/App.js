@@ -10,12 +10,28 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      account: '0x0'
+      account: '0x0',
+      daiToken: {},
+      dappToken: {},
+      tokenFarm: {},
+      daiTokenBalance: '0',
+      dappTokenBalance: '0',
+      stakingBalance: '0',
+      loading: true
     }
   }
 
   async componentWillMount() {
     await this.loadWeb3();
+    await this.loadBlockChainData();
+  }
+
+  async loadBlockChainData() {
+    const web3 = window.web3;
+
+    const accounts = await web3.eth.getAccounts();
+    //console.log(accounts);
+    this.setState({account:accounts[0]});
   }
 
   async loadWeb3() {
