@@ -84,6 +84,12 @@ contract('TokenFarm', ([owner, investor]) => {
 
       await tokenFarm.issueTokens({from: investor}).should.be.rejected;
 
+
+      await tokenFarm.unstakeTokens({from: investor});
+
+      result = await daiToken.balanceOf(investor);
+      assert.equal(result.toString(), tokens("100"), "Investor should receive mDai back when unstaking");
+
     });
   });
 
