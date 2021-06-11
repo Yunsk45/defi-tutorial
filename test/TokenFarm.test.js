@@ -72,6 +72,9 @@ contract('TokenFarm', ([owner, investor]) => {
       result = await daiToken.balanceOf(tokenFarm.address);
       assert.equal(result, tokens("100"), "Token Farm received DAI");
 
+      let stakingStatus = await tokenFarm.isStaking(investor);
+      assert.equal(stakingStatus.toString(), 'true', "Investor staking status correct after staking");
+
     });
   });
 
