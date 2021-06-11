@@ -12,4 +12,11 @@ contract TokenFarm {
       dappToken = _dappToken;
       daiToken = _daiToken;
   }
+
+
+  // Staking
+
+  // Unstaking
+
+  // Issuance
 }
