@@ -3,6 +3,8 @@ import Navbar from './Navbar'
 import './App.css'
 
 import DaiToken from '../abis/DaiToken.json'
+import DappToken from '../abis/DappToken.json'
+import TokenFarm from '../abis/TokenFarm.json'
 const Web3 = require("web3");
 
 
@@ -35,7 +37,7 @@ class App extends Component {
     this.setState({account:accounts[0]});
 
     const networkId = await web3.eth.net.getId();
-    console.log(networkId);
+    //console.log(networkId);
 
     //Load DaiToken
     const daiTokenData = DaiToken.networks[networkId];
@@ -47,8 +49,34 @@ class App extends Component {
     } else {
       window.alert("Dai Token contract not deployed to network");
     }
-  }
 
+    //Load DappToken
+    const dappTokenData = DappToken.networks[networkId];
+    if(dappTokenData) {
+      const dappToken = new web3.eth.Contract(DappToken.abi, dappTokenData.address);
+      this.setState({dappToken});
+      let dappTokenBalance = await dappToken.methods.balanceOf(this.state.account).call();
+      this.setState({dappTokenBalance: dappTokenBalance.toString()});
+    } else {
+      window.alert("Dapp Token contract not deployed to network");
+    }
+
+
+    //Load TokenFarm
+    const tokenFarmData = TokenFarm.networks[networkId];
+    if(tokenFarmData) {
+      const tokenFarm = new web3.eth.Contract(TokenFarm.abi, tokenFarmData.address);
+      this.setState({tokenFarm});
+      let stakingBalance = await tokenFarm.methods.stakingBalance(this.state.account).call();
+      this.setState({stakingBalance: stakingBalance.toString()});
+    } else {
+      window.alert("TokenFarm contract not deployed to network");
+    }
+
+    //Loading has ended
+    this.setState({loading : false});
+
+  }
   async loadWeb3() {
     if (window.ethereum) {
       await window.ethereum.send('eth_requestAccounts');
