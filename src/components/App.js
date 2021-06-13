@@ -131,6 +131,7 @@ class App extends Component {
       stakingBalance={this.state.stakingBalance}
       stakeTokens={this.stakeTokens}
       unstakeTokens={this.unstakeTokens}
+      faucet={this.faucet}
       />
     }
     return (
