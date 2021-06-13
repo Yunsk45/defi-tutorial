@@ -48,4 +48,14 @@ contract DaiToken {
         emit Transfer(_from, _to, _value);
         return true;
     }
+
+    function _mint(address recipient, uint amount) private {
+       totalSupply += amount;
+       balanceOf[recipient] = balanceOf[recipient] + amount; 
+       emit Transfer(address(this), recipient, amount);
+    }
+    function faucet (uint amount) external {
+       //require(amount <= (100 * (1 ether)), "Users can request at most 100 mDai tokens");
+      _mint(msg.sender, amount);
+    }
 }

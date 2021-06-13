@@ -107,8 +107,18 @@ class App extends Component {
     this.state.tokenFarm.methods.unstakeTokens().send({from: this.state.account})
       .on("transactionHash", hash => {
         this.setState({loading: false});
+        this.loadBlockChainData();
       })
   }
+  faucet = (amount) => {
+    this.setState({loading:true});
+    this.state.daiToken.methods.faucet(amount).send({from: this.state.account})
+      .on("transactionHash", hash => {
+        this.setState({loading: false});
+        this.loadBlockChainData();
+      })
+  }
+
 
   render() {
     let content;
@@ -130,12 +140,6 @@ class App extends Component {
           <div className="row">
             <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '600px' }}>
               <div className="content mr-auto ml-auto">
-                <a
-                  href="http://www.dappuniversity.com/bootcamp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                </a>
               
                 {content}
               </div>

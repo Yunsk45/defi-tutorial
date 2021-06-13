@@ -8,6 +8,7 @@ module.exports = async function(callback) {
   await tokenFarm.issueTokens();
 
   console.log("Token issued");
+  console.log(tokenFarm.address);
 
   callback();
 

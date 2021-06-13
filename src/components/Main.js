@@ -76,6 +76,49 @@ class Main extends Component {
               </button>
               </div>
           </div>
+      <div>
+
+
+
+           <div className="card mb-4">
+              <div className="card-body">
+                  <label className="float-left"><b>mDai Faucet</b></label>
+                <form className="mb-3" onSubmit={(event) => {
+                  event.preventDefault()
+                  let amount
+                  amount = this.input.value.toString()
+                  amount = window.web3.utils.toWei(amount, 'Ether')
+                  this.props.faucet(amount)
+                }
+                }>
+
+              <div className="input-group mb-4">
+                <input
+                  type="text"
+                  ref={(input) => { this.input = input }}
+                  className="form-control form-control-lg"
+                  placeholder="0"
+                  required />
+                <div className="input-group-append">
+                  <div className="input-group-text">
+                    <img src={dai} height='32' alt=""/>
+                    &nbsp;&nbsp;&nbsp; mDAI
+                  </div>
+                </div>
+                </div>
+            <button
+              type="submit"
+              className="btn btn-link btn-block btn-sm"
+              onClick={(event) => {
+                event.preventDefault()
+                this.props.unstakeTokens()
+              }}>
+                Request mDai Tokens
+              </button>
+            </form>
+            </div>
+            </div>
+        </div>
       </div>
     );
   }
