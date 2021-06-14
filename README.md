@@ -1,6 +1,6 @@
 # Token Farm
 
-Token farm based on defi-tutorial from dapp-university.com
+Token farm based on defi-tutorial from dappuniversity.com
 
 App available at https://frosty-goldberg-45d065.netlify.app/
 
