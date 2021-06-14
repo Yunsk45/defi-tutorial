@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Navbar from './Navbar'
 import './App.css'
 import Main from './Main.js'
+import Main2 from './Main2.js'
 
 import DaiToken from '../abis/DaiToken.json'
 import DappToken from '../abis/DappToken.json'
@@ -121,9 +122,10 @@ class App extends Component {
 
 
   render() {
-    let content;
+    let content, content2;
     if(this.state.loading) {
       content = <p id="loader" className="text-center">Loading...</p>
+      content2 = null;
     } else {
       content = <Main 
       daiTokenBalance={this.state.daiTokenBalance}
@@ -131,6 +133,12 @@ class App extends Component {
       stakingBalance={this.state.stakingBalance}
       stakeTokens={this.stakeTokens}
       unstakeTokens={this.unstakeTokens}
+      faucet={this.faucet}
+      />
+      content2 = <Main2
+      daiTokenBalance={this.state.daiTokenBalance}
+      dappTokenBalance={this.state.dappTokenBalance}
+      stakingBalance={this.state.stakingBalance}
       faucet={this.faucet}
       />
     }
@@ -143,6 +151,7 @@ class App extends Component {
               <div className="content mr-auto ml-auto">
               
                 {content}
+                {content2}
               </div>
             </main>
           </div>
